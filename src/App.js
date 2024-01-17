@@ -1,12 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
-import {Joke} from './Joke';
+import { Joke } from './Joke';
+import { AlbumVoting } from './AlbumVoting';
 
 function App() {
-  return (
+  return (<>
     <div className="App">
       <Joke />
     </div>
+    <div>
+      <AlbumVoting />
+    </div>
+  </>
   );
 }
 
