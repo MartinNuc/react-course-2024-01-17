@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 export const Joke = () => {
+  const { category } = useParams();
   const [joke, setJoke] = useState(null);
   const [isLoadingDisabled, setIsLoadingDisabled] = useState(false);
 
@@ -10,16 +12,18 @@ export const Joke = () => {
 
   function loadJoke() {
     setIsLoadingDisabled(true);
-    fetch('https://api.chucknorris.io/jokes/random')
-      .then(response => response.json())
-      .then(data => setJoke(data.value))
-      .finally(() => setIsLoadingDisabled(false))
+    fetch(`https://api.chucknorris.io/jokes/random?category=${category}`)
+      .then((response) => response.json())
+      .then((data) => setJoke(data.value))
+      .finally(() => setIsLoadingDisabled(false));
   }
 
-  return <div>
-    <button disabled={isLoadingDisabled} onClick={loadJoke}>
-      Load next
-    </button>
-    <p>{joke}</p>
-  </div>
-}
+  return (
+    <div>
+      <button disabled={isLoadingDisabled} onClick={loadJoke}>
+        Load next
+      </button>
+      <p>{joke}</p>
+    </div>
+  );
+};
