@@ -1,7 +1,6 @@
 import { UserContextProvider } from './UserContext';
 import { UserInfoPane } from './UserInfoPane';
 import { fireEvent, render, screen } from '@testing-library/react';
-import {logRoles} from '@testing-library/dom'
 
 function setupTest() {
   return {
