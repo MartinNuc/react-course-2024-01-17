@@ -1,11 +1,12 @@
 import './App.css';
 import { Joke } from './Joke';
 import { AlbumVoting } from './AlbumVoting';
-import { UserInfoPane } from './user-session/UserInfoPane';
 import { UserContextProvider } from './user-session/UserContext'
-import {Layout} from './Layout'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import {JokeCategories} from './JokeCategories'
+import {Suspense} from 'react';
+import { Layout } from './Layout'
+import { createBrowserRouter } from 'react-router-dom';
+import { JokeCategories } from './JokeCategories'
+import { RouterProvider } from 'react-router-dom'
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'categories/:category',
-        element: <Joke />
+        element: <Suspense fallback={<h1>Loading with suspense</h1>}><Joke /></Suspense>
       }
     ]
   }
