@@ -8,7 +8,6 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-  console.log(action, state)
   switch(action.type) {
     case 'login':
       return {
@@ -36,14 +35,19 @@ const reducer = (state, action) => {
       throw new Error(`Unknown action ${action.type}`);
   }
 }
-
+let cnt = 0;
 export function UserContextProvider({children}) {
   const [session, dispatch] = useReducer(reducer, initialState)
 
   useEffect(() => {
     if (!session.user) { return; }
 
-    const intervalRef = setInterval(() => dispatch({type: 'sessionTick'}), 1000);
+    let thisIntervalCnt = cnt;
+    cnt++;
+    const intervalRef = setInterval(() => {
+      console.log(thisIntervalCnt)
+      dispatch({type: 'sessionTick'})
+    }, 1000);
 
     return () => {
       if (!session.user) { return; }

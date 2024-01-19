@@ -2,11 +2,14 @@ import './App.css';
 import { Joke } from './Joke';
 import { AlbumVoting } from './AlbumVoting';
 import { UserContextProvider } from './user-session/UserContext'
-import {Suspense} from 'react';
+import { Suspense } from 'react';
 import { Layout } from './Layout'
 import { createBrowserRouter } from 'react-router-dom';
 import { JokeCategories } from './JokeCategories'
 import { RouterProvider } from 'react-router-dom'
+	
+import { store } from './store/store'
+import {Provider} from 'react-redux'
 
 const router = createBrowserRouter([
   {
@@ -36,9 +39,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (<>
-    <UserContextProvider>
-      <RouterProvider router={router} />
-    </UserContextProvider>
+    <Provider store={store}>
+      <UserContextProvider>
+        <RouterProvider router={router} />
+      </UserContextProvider>
+    </Provider>
   </>
   );
 }

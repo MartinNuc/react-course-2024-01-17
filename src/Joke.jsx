@@ -1,18 +1,23 @@
-import useSWR, {useSWRConfig} from 'swr'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchJoke } from './store/joke-slice';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 export function Joke() {
-  const { data, isValidating } = useSWR(
-    'https://api.chucknorris.io/jokes/random',
-    (cacheKey) => fetch(cacheKey).then(response => response.json()),
-    { suspense: true }
-  );
-  const { mutate } = useSWRConfig();
+  const {category} = useParams();
+  const joke = useSelector(state => state.jokeSlice.joke);
+  const isLoading = useSelector(state => state.jokeSlice.loading === 'pending');
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchJoke(category));
+  }, [])
 
   return <div>
-    <button disabled={isValidating} onClick={() => mutate(`https://api.chucknorris.io/jokes/random`)}>
+    <button disabled={isLoading} onClick={() => dispatch(fetchJoke(category))}>
       Load next
     </button>
-    <p>{isValidating && <>⏰</>}{data.value}</p>
+    <p>{isLoading && <>⏰</>}{joke}</p>
   </div>;  
 }
 
